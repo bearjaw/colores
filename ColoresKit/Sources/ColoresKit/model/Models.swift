@@ -46,13 +46,6 @@ public struct Resources: Codable {
     }
     
     public init(from decoder: Decoder) throws {
-     let values = try decoder.container(keyedBy: ColorKeys.self)
-        var container = try values.decode([String].self, forKey: .color)
-        var test = try? decoder.unkeyedContainer()
-        var test2 = try? decoder.container(keyedBy: ColorKeys.self)
-        
-        let nested = try? values.nestedContainer(keyedBy: ColorKeys.self, forKey: .color)
-        
         color = []
     }
     
