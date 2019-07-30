@@ -7,9 +7,30 @@
 
 import Foundation
 
+public enum Idiom: String, Codable {
+    case ipad
+    case iphone
+    case mac
+    case tv
+    case universal
+}
+
+struct ColoresConfig: Codable {
+    let gamut: String?
+    let colorSpace: String?
+    let locale: String?
+    let appearances: [AppearanceValue]?
+    let colors: [String: [String]]
+}
+
 public struct ColorSet: Codable {
     let info: Info
+    let properties: [Property]?
     let colors: [ColorInfo]
+}
+
+public struct Property: Codable {
+    let localizable: Bool
 }
 
 public struct Info: Codable {
@@ -19,6 +40,8 @@ public struct Info: Codable {
 
 public struct ColorInfo: Codable {
     let idiom: String
+    let appearance: [Appearance]?
+    let displayGamut: String?
     let color: Color
 }
 
@@ -34,47 +57,42 @@ public struct Component: Codable {
     let alpha: String
 }
 
-public struct Resources: Codable {
-    let color: [[String: Any]]
+enum ComponentType {
+    case rgb(red: String, green: String, blue: String, alpha: String)
+    case hex(value: String)
     
-    enum ColorKeys: String, CodingKey {
-        case name
-        case color
-    }
-    enum AttributeKeys: String, CodingKey {
-        case color
-    }
-    
-    public init(from decoder: Decoder) throws {
-        color = []
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        
+    public var component: Component {
+        switch self {
+        case .hex(let value):
+            let (red, green, blue) = Parser.parseHexValues(from: value)
+            return Component(red: red, green: green, blue: blue, alpha: "1.000")
+        case .rgb(let red, let green, let blue, let alpha):
+            return Component(red: red, green: green, blue: blue, alpha: alpha)
+        }
     }
 }
 
-//public struct XMLColor: Codable {
-//    let name: String
-//
-//
-//    init(name: String) {
-//        self.name = name
-//    }
-//
-//    enum Keys: String, CodingKey {
-//        case color
-//    }
-//
-//    enum ColorKeys: String, CodingKey {
-//        case name
-//    }
-//
-//    public init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: Keys.self)
-//
-////        let generatorAgentValues = try values.nestedContainer(keyedBy: Keys.self, forKey: .color)
-////        let ta = try generatorAgentValues.decode(String.self, forKey: .name)
-//
-//    }
-//}
+public struct Appearance: Codable {
+    let appearance: String
+    let value: String
+}
+
+public enum AppearanceValue: String, Codable {
+    case dark
+    case light
+    case high
+}
+
+public enum AppearanceType {
+    case contrast(value: String)
+    case luminosity(value: String)
+    
+    public var appearance: Appearance {
+        switch self {
+        case .contrast(let value):
+            return Appearance(appearance: "contrast", value: value)
+        case .luminosity(let value):
+            return Appearance(appearance: "luminosity", value: value)
+        }
+    }
+}
