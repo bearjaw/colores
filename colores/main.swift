@@ -14,7 +14,5 @@ print("Please enter a file url:")
 if let url = readLine() {
     let url = URL(fileURLWithPath: url)
     ColoresKit.generateColors(fromAssets: url, outputURL: url)
-} else {
-    print("Why are you being so coy?")
 }
 

@@ -3,17 +3,19 @@ import Foundation
 final public class ColoresKit: NSObject {
     
     public static func generateColors(fromAssets assetsURL: URL, outputURL: URL) {
-        let json = FileService.loadJSON(at: assetsURL)
-        guard let colors = json["colors"] as? [String: String] else { return }
-        createColors(from: colors, at: outputURL)
+        
+        let config = FileService.loadJSON(at: assetsURL)
+        createColors(from: config.colors, at: outputURL, using: config)
     }
     
-    private static func createColors(from json: [String: String], at url: URL) {
+    private static func createColors(from json: [String: [String]], at url: URL, using config: ColoresConfig) {
        let output = try! FileService.createDirectoryIfNeeded(named: "tempAssets", at: URL(fileURLWithPath: ""))
         for (key, value) in json {
             do {
                 guard let folder = try FileService.createDirectoryIfNeeded(named: key, at: output!) else { continue }
-                let colorSet = Parser.decodeColors(from: value)
+                let alpha = value.count == 2 ? value.last! : "1.000"
+                let colorString = value.first!
+                let colorSet = Parser.decodeColors(from: colorString, alpha: alpha, using: config)
                 let encoded = try Parser.encodeContent(colorSet)
                 try FileService.persistFile(file: encoded, named: "Contents", fileTyoe: .json, at: folder)
             } catch {
