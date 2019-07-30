@@ -18,9 +18,15 @@ public enum Idiom: String, Codable {
 struct ColoresConfig: Codable {
     let gamut: String?
     let colorSpace: String?
-    let locale: String?
+    let locales: [String]?
+    let idioms: [String]?
     let appearances: [AppearanceValue]?
     let colors: [String: [String]]
+    
+    var includeHighContrast: Bool? {
+        guard let appearances = appearances else { return nil }
+        return appearances.contains(.high)
+    }
 }
 
 public struct ColorSet: Codable {
@@ -40,6 +46,7 @@ public struct Info: Codable {
 
 public struct ColorInfo: Codable {
     let idiom: String
+    let locale: String?
     let appearance: [Appearance]?
     let displayGamut: String?
     let color: Color
@@ -65,7 +72,7 @@ enum ComponentType {
         switch self {
         case .hex(let value):
             let (red, green, blue) = Parser.parseHexValues(from: value)
-            return Component(red: red, green: green, blue: blue, alpha: "1.000")
+            return Component(red: "0x\(red)", green: "0x\(green)", blue: "0x\(blue)", alpha: "1.000")
         case .rgb(let red, let green, let blue, let alpha):
             return Component(red: red, green: green, blue: blue, alpha: alpha)
         }
@@ -84,15 +91,15 @@ public enum AppearanceValue: String, Codable {
 }
 
 public enum AppearanceType {
-    case contrast(value: String)
-    case luminosity(value: String)
+    case contrast(value: AppearanceValue)
+    case luminosity(value: AppearanceValue)
     
     public var appearance: Appearance {
         switch self {
         case .contrast(let value):
-            return Appearance(appearance: "contrast", value: value)
+            return Appearance(appearance: "contrast", value: value.rawValue)
         case .luminosity(let value):
-            return Appearance(appearance: "luminosity", value: value)
+            return Appearance(appearance: "luminosity", value: value.rawValue)
         }
     }
 }
