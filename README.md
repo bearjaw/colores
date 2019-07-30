@@ -2,7 +2,7 @@
 ![](./img/colores.png)
 
 Generate Xcode color assets using the CommandLine &amp; JSON. Using Colores you can bulk add & set up default values for color assets in Xcode.
-Adding colors in Xcode can sometimes be a terrible user experience especially now that there are many appearances to support. ¯\_(ツ)_/¯ 
+Adding colors in Xcode can sometimes be a terrible user experience especially now that there are many appearances to support. ¯\\\_(ツ)_/¯ 
 
 Colores aims to improve this part of the development flow. 
 
