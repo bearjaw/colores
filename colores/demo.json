@@ -1,9 +1,10 @@
 {
     "appearances": ["dark", "light", "high"],
+    "idioms": ["universal"],
     "colorSpace": "srgb",
     "locale": "en",
-    "hexColors": {
+    "colors": {
         "primaryBackground": ["#1f212b","1.000"],
-        "primaryBackground": ["#ffffff","1.000"],
+        "secondaryBackground": ["#ffffff","1.000"],
     }
 }
