@@ -9,10 +9,18 @@
 import Foundation
 import ColoresKit
 
-print("Please enter a file url:")
-
-if let url = readLine() {
-    let url = URL(fileURLWithPath: url)
-    ColoresKit.generateColors(fromAssets: url, outputURL: url)
+if let index = CommandLine.arguments.firstIndex(of: "--sketch") {
+    let file = CommandLine.arguments[index+1]
+    let url = URL(fileURLWithPath: file).appendingPathComponent("document").appendingPathExtension("json")
+    print("Generating colorsets")
+    ColoresKit.generateColors(fromAssets: url, outputURL: url, fileType: .sketch)
+} else {
+    print("Please enter a file path and hit enter:")
+    if let url = readLine(), !url.isEmpty {
+        let url = URL(fileURLWithPath: url)
+        ColoresKit.generateColors(fromAssets: url, outputURL: url, fileType: .json)
+    } else {
+        print("No file path provided ¯\\_(ツ)_/¯")
+    }
 }
 
