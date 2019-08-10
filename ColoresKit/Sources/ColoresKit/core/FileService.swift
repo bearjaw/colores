@@ -43,6 +43,13 @@ final class FileService {
         return namedURL
     }
     
+    static func deleteDirectoryIfNeeded(named name: String, at url: URL) throws -> URL? {
+        let namedURL = url.appendingPathComponent(name)
+        guard !FileManager.default.fileExists(atPath: namedURL.path) else { return namedURL }
+        try FileManager.default.removeItem(at: namedURL)
+        return namedURL
+    }
+    
     static func persistFile(file data: Data, named name: String, fileType: FileExtension, at url: URL) throws {
         try data.write(to: url.appendingPathComponent(name).appendingPathExtension(fileType.rawValue))
     }
