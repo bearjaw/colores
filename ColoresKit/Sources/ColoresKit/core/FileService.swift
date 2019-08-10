@@ -25,6 +25,16 @@ final class FileService {
         }
     }
     
+    static func loadJSON(at url: URL) -> SketchDocument {
+        do {
+            let data = try Data(contentsOf: url)
+            let json = try JSONDecoder().decode(SketchDocument.self, from: data)
+            return json
+        } catch {
+            fatalError("Error: Could to open file. \(error)")
+        }
+    }
+    
     @discardableResult
     static func createDirectoryIfNeeded(named name: String, at url: URL) throws -> URL? {
         let namedURL = url.appendingPathComponent(name)
@@ -33,7 +43,14 @@ final class FileService {
         return namedURL
     }
     
-    static func persistFile(file data: Data, named name: String, fileTyoe: FileExtension, at url: URL) throws {
-        try data.write(to: url.appendingPathComponent(name).appendingPathExtension(fileTyoe.rawValue))
+    static func deleteDirectoryIfNeeded(named name: String, at url: URL) throws -> URL? {
+        let namedURL = url.appendingPathComponent(name)
+        guard !FileManager.default.fileExists(atPath: namedURL.path) else { return namedURL }
+        try FileManager.default.removeItem(at: namedURL)
+        return namedURL
+    }
+    
+    static func persistFile(file data: Data, named name: String, fileType: FileExtension, at url: URL) throws {
+        try data.write(to: url.appendingPathComponent(name).appendingPathExtension(fileType.rawValue))
     }
 }

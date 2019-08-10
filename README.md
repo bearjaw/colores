@@ -17,16 +17,37 @@ Colores supports the following features:
 - Create the same color for any idiom
 - Create the same color for high contrast
 - Define a color space
+- Basic sketch support
 
 ## Usage
 
-Clone the repository and navigate to colores/colores folder. Copy & paste the following in your terminal 
+### Simple JSON file
+
+Clone the repository and build the source code.  Alternatively you can use the provided executable. (Found in the `Product` folder)
+
+Check out the `demo.json` file to see how you can define your colors in a JSON format that `Colores` supports.
+
+Once you've declared all your  colors use the following command on in your terminal client:
 
 ```
-./colores demo.json
+./colores yourFile.json
 ```
 
 This will generate a temporay folder & decode all the colors defined in the `demo.json` file.
+
+### Sketch SharedLayer Styles
+
+This will generate a temporay folder and decode all the defined shared layer styles in your sketch file. These will be ready to be dropped into your `Assets.xcasset` folder. 
+
+```
+./colores --sketch path/to/your/unizpped/sketch/folder
+```
+
+#### Alternative
+
+```
+./colores -s path/to/your/unizpped/sketch/folder
+```
 
 ## Configuration
 
@@ -48,12 +69,14 @@ In a future version it shall be possible to set certain color specific attribute
 ```
 
 ## What's on the roadmap... 🚀
+- [x] Add dark mode support
+- [x] Add support for idioms
+- [x] Add support for locales
+- [x] Add basic support for sketch
 - [ ] Tests
 - [ ] Documentation
 - [ ] Add support for custom ouputs
 - [ ] Add support to add color sets to the asset folder
 - [ ] Add support for CommandLine arguments
 - [ ] Add support to define a color for a given appearance
-- [x] Add dark mode support
-- [x] Add support for idioms
-- [x] Add support for locales
+- [ ] Add advanced support for sketch

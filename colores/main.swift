@@ -9,10 +9,20 @@
 import Foundation
 import ColoresKit
 
-print("Please enter a file url:")
+let arguments = CommandLine.arguments
 
-if let url = readLine() {
-    let url = URL(fileURLWithPath: url)
-    ColoresKit.generateColors(fromAssets: url, outputURL: url)
+func requireInput() -> String? {
+    if let input = readLine(), !input.isEmpty {
+        return input
+    }
+    return nil
+}
+
+if CommandLineHelper.parseArguments(arguments) == false {
+    print("Please enter a file path and hit enter:")
+    if let url = requireInput() {
+        let url = URL(fileURLWithPath: url)
+        ColoresKit.generateColors(fromAssets: url, outputURL: url, fileType: .json)
+    }
 }
 
