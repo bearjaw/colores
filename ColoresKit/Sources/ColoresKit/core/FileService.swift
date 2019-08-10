@@ -25,6 +25,16 @@ final class FileService {
         }
     }
     
+    static func loadJSON(at url: URL) -> SketchDocument {
+        do {
+            let data = try Data(contentsOf: url)
+            let json = try JSONDecoder().decode(SketchDocument.self, from: data)
+            return json
+        } catch {
+            fatalError("Error: Could to open file. \(error)")
+        }
+    }
+    
     @discardableResult
     static func createDirectoryIfNeeded(named name: String, at url: URL) throws -> URL? {
         let namedURL = url.appendingPathComponent(name)
