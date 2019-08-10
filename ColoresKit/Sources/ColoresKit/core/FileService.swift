@@ -43,7 +43,7 @@ final class FileService {
         return namedURL
     }
     
-    static func persistFile(file data: Data, named name: String, fileTyoe: FileExtension, at url: URL) throws {
-        try data.write(to: url.appendingPathComponent(name).appendingPathExtension(fileTyoe.rawValue))
+    static func persistFile(file data: Data, named name: String, fileType: FileExtension, at url: URL) throws {
+        try data.write(to: url.appendingPathComponent(name).appendingPathExtension(fileType.rawValue))
     }
 }

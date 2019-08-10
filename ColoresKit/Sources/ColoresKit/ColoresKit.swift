@@ -17,7 +17,7 @@ final public class ColoresKit: NSObject {
                 let colorString = value.first!
                 let colorSet = Parser.decodeColors(from: colorString, alpha: alpha, using: config)
                 let encoded = try Parser.encodeContent(colorSet)
-                try FileService.persistFile(file: encoded, named: "Contents", fileTyoe: .json, at: folder)
+                try FileService.persistFile(file: encoded, named: "Contents", fileType: .json, at: folder)
             } catch {
                 fatalError("Error while generating color set. Error thrown \(error.localizedDescription)")
             }
