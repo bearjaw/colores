@@ -56,6 +56,7 @@ final class Parser {
 }
 
 extension Parser {
+    
     static func createColorsForAppearances(component: Component, using config: ColoresConfig) -> [ColorInfo] {
         let color = createColor(from: component, using: config)
         guard let appearances = config.appearances else { return [createColorInfo(color: color, using: config)] }
