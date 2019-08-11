@@ -22,22 +22,22 @@ public class CommandLineHelper {
         if validateArgument(arguments, index: index) {
             let url = parseURLIfAvailable(arguments: arguments)
             let file = arguments[index+1]
-            createColorSets(from: file, output: url)
+            createColorSets(from: file, outputURL: url)
         } else {
             print("Please provide a path to an unzipped sketch file:")
             if let url = readLine(), !url.isEmpty {
-                let url = parseURLIfAvailable(arguments: arguments)
-                createColorSets(from: url, output: url)
+                let output = parseURLIfAvailable(arguments: arguments)
+                createColorSets(from: url, outputURL: output)
             } else {
                 print("No file path provided ¯\\_(ツ)_/¯")
             }
         }
     }
     
-    private static func createColorSets(from file: String, output url: URL? = nil) {
+    private static func createColorSets(from file: String, outputURL output: URL? = nil) {
         let url = URL(fileURLWithPath: file).appendingPathComponent("document").appendingPathExtension("json")
         print("Generating colorsets")
-        ColoresKit.generateColors(fromAssets: url, outputURL: url, fileType: .sketch)
+        ColoresKit.generateColors(fromAssets: url, outputURL: output ?? url, fileType: .sketch)
     }
     
     private static func validateArgument(_ arguments: [String], index: Int) -> Bool {
