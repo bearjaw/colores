@@ -15,20 +15,14 @@ enum FileExtension: String {
 
 final class FileService {
     
-    static func loadJSON(at url: URL) -> ColoresConfig {
-        do {
-            let data = try Data(contentsOf: url)
-            let json = try JSONDecoder().decode(ColoresConfig.self, from: data)
-            return json
-        } catch {
-            fatalError("Error: Could to open file. \(error)")
-        }
+    static func loadJSON<T: Decodable>(at url: URL) throws -> T {
+        let data = try Data(contentsOf: url)
+        return try loadJSON(from: data)
     }
     
-    static func loadJSON(at url: URL) -> SketchDocument {
+    static func loadJSON<T: Decodable>(from data: Data) throws -> T {
         do {
-            let data = try Data(contentsOf: url)
-            let json = try JSONDecoder().decode(SketchDocument.self, from: data)
+            let json = try JSONDecoder().decode(T.self, from: data)
             return json
         } catch {
             fatalError("Error: Could to open file. \(error)")
