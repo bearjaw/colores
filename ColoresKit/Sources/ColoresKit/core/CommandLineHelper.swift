@@ -23,14 +23,16 @@ public class CommandLineHelper {
             let url = parseURLIfAvailable(arguments: arguments)
             let file = URL(fileURLWithPath: arguments[index+1])
             guard validateFilePath(file) else { exit(EXIT_FAILURE) }
-            createColorSets(from: file, outputURL: url)
+            let verbose = hasVerboseArgument(arguments: arguments)
+            createColorSets(from: file, outputURL: url, verbose: verbose)
         } else {
             print("Please provide a path to an unzipped sketch file:")
             if let url = readLine(), !url.isEmpty {
                 let output = parseURLIfAvailable(arguments: arguments)
                 let file = URL(fileURLWithPath: url)
                 guard validateFilePath(file) else { exit(EXIT_FAILURE) }
-                createColorSets(from: file, outputURL: output)
+                let verbose = hasVerboseArgument(arguments: arguments)
+                createColorSets(from: file, outputURL: output, verbose: verbose)
             } else {
                 print("No file path provided ¯\\_(ツ)_/¯")
                 exit(EXIT_FAILURE)
@@ -38,10 +40,10 @@ public class CommandLineHelper {
         }
     }
     
-    private static func createColorSets(from file: URL, outputURL output: URL? = nil) {
+    private static func createColorSets(from file: URL, outputURL output: URL? = nil, verbose: Bool = false) {
         let url = file.appendingPathComponent("document").appendingPathExtension("json")
-        print("Generating colorsets")
-        ColoresKit.generateColors(fromAssets: url, outputURL: output, fileType: .sketch)
+        print("🚀 Generating your assets now:")
+        ColoresKit.generateColors(fromAssets: url, outputURL: output, fileType: .sketch, verbose: verbose)
     }
     
     private static func validateArgument(_ arguments: [String], index: Int) -> Bool {
@@ -96,5 +98,10 @@ extension CommandLineHelper {
     
 }
 
+// MARK: - Verbose
 
-
+extension CommandLineHelper {
+    private static func hasVerboseArgument(arguments: [String]) -> Bool {
+        return arguments.contains("--verbose") || arguments.contains("-v")
+    }
+}
