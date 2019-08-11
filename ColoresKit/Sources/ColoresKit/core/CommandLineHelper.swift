@@ -37,7 +37,7 @@ public class CommandLineHelper {
     private static func createColorSets(from file: String, outputURL output: URL? = nil) {
         let url = URL(fileURLWithPath: file).appendingPathComponent("document").appendingPathExtension("json")
         print("Generating colorsets")
-        ColoresKit.generateColors(fromAssets: url, outputURL: output ?? url, fileType: .sketch)
+        ColoresKit.generateColors(fromAssets: url, outputURL: output, fileType: .sketch)
     }
     
     private static func validateArgument(_ arguments: [String], index: Int) -> Bool {
