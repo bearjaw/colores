@@ -25,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		481C1DEF22F09C26003EE0EF /* demo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = demo.json; path = colores/demo.json; sourceTree = "<group>"; };
+		482D2A2523002BD300A040B3 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		4873C9DF22EF69760042B638 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		48DCB3F922EF49D200CE30DE /* colores */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = colores; sourceTree = BUILT_PRODUCTS_DIR; };
 		48DCB3FC22EF49D200CE30DE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				481C1DEF22F09C26003EE0EF /* demo.json */,
+				482D2A2523002BD300A040B3 /* .travis.yml */,
 				4873C9DF22EF69760042B638 /* README.md */,
 				48DCB40322EF49F800CE30DE /* ColoresKit */,
 				48DCB3FB22EF49D200CE30DE /* colores */,

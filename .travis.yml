@@ -1,0 +1,10 @@
+# references:
+# * http://www.objc.io/issue-6/travis-ci.html
+# * https://github.com/supermarin/xcpretty#usage
+
+language: swift
+osx_image: xcode11
+
+script:
+- set -o pipefail && xcodebuild -project colores.xcodeproj -scheme colores CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+- set -o pipefail && xcodebuild -project colores.xcodeproj -scheme ColoresKit CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO test
