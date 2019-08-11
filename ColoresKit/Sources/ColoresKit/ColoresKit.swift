@@ -1,10 +1,5 @@
 import Foundation
 
-public enum FileType {
-    case json
-    case sketch
-}
-
 final public class ColoresKit: NSObject {
     
     public static func generateColors(fromAssets assetsURL: URL, outputURL: URL?, fileType: FileType) {
@@ -18,7 +13,8 @@ final public class ColoresKit: NSObject {
                 createColors(from: config, at: assetsURL, output: outputURL)
             }
         } catch {
-            fatalError("Error while creating Xocde color assets. Reason: \(error)")
+            print("Error while creating Xocde color assets. Reason: \(error)")
+            exit(EXIT_FAILURE)
         }
     }
     
@@ -35,13 +31,14 @@ final public class ColoresKit: NSObject {
                 
             }
         } catch {
-            fatalError("Error while generating color set. Error thrown \(error.localizedDescription)")
+            print("Error while generating color set. Error thrown \(error.localizedDescription)")
+            exit(EXIT_FAILURE)
         }
     }
     
     private static func createColors(from sketch: SketchDocument, at url: URL, output: URL? = nil) {
         
-        let sets = Parser.creeteColorSets(from: sketch, at: url)
+        let sets = Parser.creeteColorSets(from: sketch)
         do {
             let outputURL = output != nil ? output : try FileService.createDirectoryIfNeeded(named: "tempAssets", at: URL(fileURLWithPath: ""))
             for set in sets {
@@ -51,7 +48,8 @@ final public class ColoresKit: NSObject {
                 try FileService.persistFile(file: encoded, named: "Contents", fileType: .json, at: folder)
             }
         } catch {
-            fatalError("Error while generating color set. Error thrown \(error.localizedDescription)")
+            print("Error while generating color set. Error thrown \(error.localizedDescription)")
+            exit(EXIT_FAILURE)
         }
     }
 }

@@ -21,21 +21,25 @@ public class CommandLineHelper {
     private static func parseSketchFile(for arguments: [String], at index: Int) {
         if validateArgument(arguments, index: index) {
             let url = parseURLIfAvailable(arguments: arguments)
-            let file = arguments[index+1]
+            let file = URL(fileURLWithPath: arguments[index+1])
+            guard validateFilePath(file) else { exit(EXIT_FAILURE) }
             createColorSets(from: file, outputURL: url)
         } else {
             print("Please provide a path to an unzipped sketch file:")
             if let url = readLine(), !url.isEmpty {
                 let output = parseURLIfAvailable(arguments: arguments)
-                createColorSets(from: url, outputURL: output)
+                let file = URL(fileURLWithPath: url)
+                guard validateFilePath(file) else { exit(EXIT_FAILURE) }
+                createColorSets(from: file, outputURL: output)
             } else {
                 print("No file path provided ¯\\_(ツ)_/¯")
+                exit(EXIT_FAILURE)
             }
         }
     }
     
-    private static func createColorSets(from file: String, outputURL output: URL? = nil) {
-        let url = URL(fileURLWithPath: file).appendingPathComponent("document").appendingPathExtension("json")
+    private static func createColorSets(from file: URL, outputURL output: URL? = nil) {
+        let url = file.appendingPathComponent("document").appendingPathExtension("json")
         print("Generating colorsets")
         ColoresKit.generateColors(fromAssets: url, outputURL: output, fileType: .sketch)
     }
@@ -59,6 +63,14 @@ extension CommandLineHelper {
         return index
     }
     
+    private static func validateFilePath(_ url: URL) -> Bool {
+        guard !url.pathExtension.contains("sketch") else {
+            print("Error. Please duplicate & unzip your sketch file first.")
+            exit(1)
+        }
+        return true
+    }
+    
 }
 
 // MARK: - Output Path provided
@@ -75,7 +87,8 @@ extension CommandLineHelper {
     
     private static func parseURLIfAvailable(arguments: [String]) -> URL? {
         if let outputIndex = hasOuputArgument(arguments: arguments), validateArgument(arguments, index: outputIndex) {
-            return URL(fileURLWithPath: arguments[outputIndex+1])
+            let path = arguments[outputIndex+1]
+            return URL(fileURLWithPath: path)
         } else {
             return nil
         }

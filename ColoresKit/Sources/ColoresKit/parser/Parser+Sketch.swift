@@ -9,7 +9,7 @@ import Foundation
 
 extension Parser {
     
-    static func creeteColorSets(from sketch: SketchDocument, at url: URL) -> [SketchColorSet] {
+    static func creeteColorSets(from sketch: SketchDocument) -> [SketchColorSet] {
         let config = ColoresConfig(gamut: nil, colorSpace: nil, locales: nil, idioms: ["universal"], appearances: nil, colors: [:])
         let sets = sketch.layerStyles.objects.map { createColorSet(from: $0, using: config) }
         return sets
