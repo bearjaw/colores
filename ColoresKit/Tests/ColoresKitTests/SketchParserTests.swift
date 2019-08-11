@@ -52,14 +52,14 @@ extension SketchParserTests {
     private static func loadTestData() -> SketchDocument {
         guard let data = TestHelper.sketchDocument.data(using: .utf8) else {
             XCTFail("Data was nil. Could not encode JSON to data")
-            fatalError("Data was nil. Could not encode JSON to data")
+            exit(EXIT_FAILURE)
         }
         do {
             let sketch: SketchDocument = try FileService.loadJSON(from: data)
             return sketch
         } catch {
             XCTFail("Test failed: Could not decode \(SketchDocument.self) from String. Reason: \(error)")
-            fatalError("Data was nil. Could not encode JSON to data. Reason: \(error)")
+            exit(EXIT_FAILURE)
         }
     }
     

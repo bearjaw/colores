@@ -30,6 +30,7 @@ public class CommandLineHelper {
                 createColorSets(from: url, outputURL: output)
             } else {
                 print("No file path provided ¯\\_(ツ)_/¯")
+                exit(EXIT_FAILURE)
             }
         }
     }
