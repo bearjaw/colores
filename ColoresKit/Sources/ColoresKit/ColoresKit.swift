@@ -8,13 +8,17 @@ public enum FileType {
 final public class ColoresKit: NSObject {
     
     public static func generateColors(fromAssets assetsURL: URL, outputURL: URL, fileType: FileType) {
-        switch fileType {
-        case .json:
-            let config: ColoresConfig = FileService.loadJSON(at: assetsURL)
-            createColors(from: config.colors, at: outputURL, using: config)
-        case .sketch:
-            let config: SketchDocument = FileService.loadJSON(at: assetsURL)
-            createColors(from: config, at: assetsURL)
+        do {
+            switch fileType {
+            case .json:
+                let config: ColoresConfig = try FileService.loadJSON(at: assetsURL)
+                createColors(from: config.colors, at: outputURL, using: config)
+            case .sketch:
+                let config: SketchDocument = try FileService.loadJSON(at: assetsURL)
+                createColors(from: config, at: assetsURL)
+            }
+        } catch {
+            fatalError("Error while creating Xocde color assets. Reason: \(error)")
         }
     }
     
