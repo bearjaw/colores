@@ -44,6 +44,12 @@ final class FileService {
         return namedURL
     }
     
+    static func moveContent(at url: URL, to output: URL) throws {
+        guard FileManager.default.fileExists(atPath: url.path) else { return }
+        let content = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        try content.forEach { try FileManager.default.moveItem(at: $0, to: output) }
+    }
+    
     static func persistFile(file data: Data, named name: String, fileType: FileExtension, at url: URL) throws {
         try data.write(to: url.appendingPathComponent(name).appendingPathExtension(fileType.rawValue))
     }
