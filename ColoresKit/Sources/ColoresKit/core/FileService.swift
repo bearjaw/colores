@@ -7,6 +7,11 @@
 
 import Foundation
 
+public enum FileType {
+    case json
+    case sketch
+}
+
 enum FileExtension: String {
     case json
     case text

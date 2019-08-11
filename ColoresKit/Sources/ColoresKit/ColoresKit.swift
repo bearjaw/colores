@@ -1,10 +1,5 @@
 import Foundation
 
-public enum FileType {
-    case json
-    case sketch
-}
-
 final public class ColoresKit: NSObject {
     
     public static func generateColors(fromAssets assetsURL: URL, outputURL: URL?, fileType: FileType) {
