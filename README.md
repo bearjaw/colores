@@ -1,4 +1,8 @@
 # colores
+
+[![Build Status](https://travis-ci.org/bearjaw/colores.svg?branch=master)](https://travis-ci.org/bearjaw/colores)
+[![GitHub release](https://img.shields.io/github/release/bearjaw/colores)](https://github.com/bearjaw/colores/releases/)
+
 ![](./img/colores.png)
 
 Generate Xcode color assets using the CommandLine &amp; JSON. Using Colores you can bulk add & set up default values for color assets in Xcode.
