@@ -21,12 +21,8 @@ final class FileService {
     }
     
     static func loadJSON<T: Decodable>(from data: Data) throws -> T {
-        do {
-            let json = try JSONDecoder().decode(T.self, from: data)
-            return json
-        } catch {
-            fatalError("Error: Could to open file. \(error)")
-        }
+        let json = try JSONDecoder().decode(T.self, from: data)
+        return json
     }
     
     @discardableResult
